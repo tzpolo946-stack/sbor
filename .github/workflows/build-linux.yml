@@ -1,5 +1,6 @@
 name: Build Linux ELF
-on: [workflow_dispatch]
+on:
+  workflow_dispatch:
 
 jobs:
   build:
@@ -10,11 +11,9 @@ jobs:
         with:
           python-version: '3.11'
       - name: Install dependencies
-        run: |
-          pip install pyinstaller PyQt6 minecraft-launcher-lib requests pypresence
+        run: pip install pyinstaller PyQt6 minecraft-launcher-lib requests pypresence
       - name: Build ELF
-        run: |
-          pyinstaller --noconsole --onefile --paths "." --name "PurpleLauncher-linux" --hidden-import "modrinth" --hidden-import "core" --hidden-import "rpc" --hidden-import "requests" --hidden-import "pypresence" --add-data "style.qss:." --add-data "runtime:runtime" main.py
+        run: pyinstaller --noconsole --onefile --paths "." --name "PurpleLauncher-linux" --hidden-import "modrinth" --hidden-import "core" --hidden-import "rpc" --hidden-import "requests" --hidden-import "pypresence" --add-data "style.qss:." --add-data "runtime:runtime" main.py
       - name: Upload ELF artifact
         uses: actions/upload-artifact@v4
         with:
